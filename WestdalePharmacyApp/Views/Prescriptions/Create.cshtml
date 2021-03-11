@@ -1,0 +1,189 @@
+﻿@model IEnumerable<WestdalePharmacyApp.Models.Prescription>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    var user = await UserManager.GetUserAsync(User);
+    var firstName = user.FirstName;
+    var lastName = user.LastName;
+    var userId = user.Id;
+}
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Request Prescription</h1>
+
+<h4>Prescription</h4>
+<hr />
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input id="name" type="text" class="form-control" value="@firstName @lastName" disabled />
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Special Instructions (Delivery)</label>
+            <textarea id="special" class="form-control"> </textarea>
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Image</label>
+            <input id="txtFile" name="photo" type="file" class="form-control-file" capture="camera" accept="image/*" >
+        </div>
+        <div class="form-group">
+
+            <img id="imgViewer" width="200" height="200" style="border:1px solid #000000;" />
+        </div>
+
+        <div class="form-group">
+            <button id="btnSave" class="btn btn-primary">Submit</button>
+            @*<button id="btnRead" class="btn btn-primary">Read</button>*@
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+    });
+    $("#txtFile").change(function (event) {
+        var files = event.target.files;
+
+        $("#imgViewer").attr("src", window.URL.createObjectURL(files[0]));
+    });
+
+    $("#btnSave").click(function () {
+        var files = $("#txtFile").prop("files");
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("file", files[i]);
+        }
+        var prescription = {
+
+            //UserId: $("#Id").val(),
+            //ImageFile: $("#txtFile").val()
+            SpecialInstruction: $("#special").val()
+
+        };
+        formData.append("Prescription", JSON.stringify(prescription));
+
+        $.ajax({
+            type: "POST",
+            url: "/Prescriptions/SaveFile",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                ResetFields();
+                alert(data);
+
+                if (data == "Failed") {
+                    var baseUrl="@Url.Action("Create","Prescriptions")";
+                    window.location.href=baseUrl;
+                }
+                else {
+                    var baseUrl="@Url.Action("Index","Home")";
+                    window.location.href=baseUrl;
+                }
+
+
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+
+        });
+    });
+
+    $("#btnRead").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Prescriptions/GetSavedPrescription",
+            success: function (data) {
+                $("#Id").val(data.UserId);
+                $("#imgViewer").attr("src", "data:image/jpg;base64," + data.ImageFile + "");
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+
+        });
+
+    });
+
+
+    function ResetFields() {
+        UserId: $("#Id").val("");
+        $("#imgViewer").attr("src", "");
+    }
+
+
+
+</script>
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Refill" class="control-label"></label>
+                    <input asp-for="Refill" class="form-control" />
+                    <span asp-validation-for="Refill" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" class="form-control" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CreationTime" class="control-label"></label>
+                    <input asp-for="CreationTime" class="form-control" />
+                    <span asp-validation-for="CreationTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UpdatedTime" class="control-label"></label>
+                    <input asp-for="UpdatedTime" class="form-control" />
+                    <span asp-validation-for="UpdatedTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SpecialInstruction" class="control-label"></label>
+                    <input asp-for="SpecialInstruction" class="form-control" />
+                    <span asp-validation-for="SpecialInstruction" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@

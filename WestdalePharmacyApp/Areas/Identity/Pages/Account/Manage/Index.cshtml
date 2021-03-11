@@ -1,0 +1,117 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" autofocus />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Gender"></label>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                <select asp-for="Input.Gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.BirthDate"></label>
+                <input asp-for="Input.BirthDate" class="form-control" />
+                <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.HealthCard"></label>
+                <input asp-for="Input.HealthCard" class="form-control" />
+                <span asp-validation-for="Input.HealthCard" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.InsuranceNumber"></label>
+                <input asp-for="Input.InsuranceNumber" class="form-control" />
+                <span asp-validation-for="Input.InsuranceNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Allergies"></label>
+                <textarea asp-for="Input.Allergies" class="form-control"> </textarea>
+                <span asp-validation-for="Input.Allergies" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.AddressLine1"></label>
+                <input asp-for="Input.AddressLine1" class="form-control" />
+                <span asp-validation-for="Input.AddressLine1" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.AddressLine2"></label>
+                <input asp-for="Input.AddressLine2" class="form-control" />
+                <span asp-validation-for="Input.AddressLine2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.PostalCode"></label>
+                <input asp-for="Input.PostalCode" class="form-control" />
+                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Province"></label>
+                <span asp-validation-for="Input.Province" class="text-danger"></span>
+                <select asp-for="Input.Province" class="form-control">
+                    <option value="Ontario">Ontario</option>
+                    <option value="Quebec">Quebec</option>
+                    <option value="Alberta">Alberta</option>
+                    <option value="Saskatchewan">Saskatchewan</option>
+                    <option value="British Columbia">British Columbia</option>
+                    <option value="New Brunswick">New Brunswick</option>
+                    <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                    <option value="Nova Scotia">Nova Scotia</option>
+                    <option value="Prince Edward Island">Prince Edward Island</option>
+                    <option value="Northwest Territories">Northwest Territories</option>
+                    <option value="Nunavut">Nunavut</option>
+                    <option value="Yukon">Yukon</option>
+
+                </select>
+                <div class="form-group">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+                <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
