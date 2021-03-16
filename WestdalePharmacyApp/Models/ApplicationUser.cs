@@ -10,6 +10,8 @@ namespace WestdalePharmacyApp.Models
     {
         public virtual ICollection<Prescription> Prescriptions { get; set; }
 
+        public virtual ICollection<Message> Messages { get; set; }
+
         [PersonalData]
         public string FirstName { get; set; }
 

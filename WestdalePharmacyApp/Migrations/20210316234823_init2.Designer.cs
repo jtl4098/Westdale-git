@@ -10,8 +10,8 @@ using WestdalePharmacyApp.Data;
 namespace WestdalePharmacyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210310232607_init")]
-    partial class init
+    [Migration("20210316234823_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -257,6 +257,37 @@ namespace WestdalePharmacyApp.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("WestdalePharmacyApp.Models.Message", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("From_UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("To_UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("WestdalePharmacyApp.Models.Prescription", b =>
                 {
                     b.Property<Guid>("PrescriptionId")
@@ -340,6 +371,13 @@ namespace WestdalePharmacyApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WestdalePharmacyApp.Models.Message", b =>
+                {
+                    b.HasOne("WestdalePharmacyApp.Models.ApplicationUser", "To_User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WestdalePharmacyApp.Models.Prescription", b =>
