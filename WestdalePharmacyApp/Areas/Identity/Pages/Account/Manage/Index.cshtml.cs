@@ -63,7 +63,7 @@ namespace WestdalePharmacyApp.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Province")]
             public string Province { get; set; }
 
-           
+            [Required]
             [Display(Name = "Health Card No")]
             public string HealthCard { get; set; }
 
@@ -81,7 +81,7 @@ namespace WestdalePharmacyApp.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Gender")]
             public string Gender { get; set; }
 
-            
+            [Required]
             [Display(Name = "Allergies")]
             public string Allergies { get; set; }
 

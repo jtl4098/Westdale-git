@@ -9,11 +9,10 @@ namespace WestdalePharmacyApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Prescription> Prescriptions { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-        
+        public DbSet<WestdalePharmacyApp.Models.User> User { get; set; }
     }
 }
