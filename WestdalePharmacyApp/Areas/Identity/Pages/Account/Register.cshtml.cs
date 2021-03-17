@@ -25,17 +25,20 @@ namespace WestdalePharmacyApp.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -151,11 +154,25 @@ namespace WestdalePharmacyApp.Areas.Identity.Pages.Account
                     HealthCard = Input.HealthCard,
                     InsuranceNumber = Input.InsuranceNumber,
                     PhoneNumber = Input.PhoneNumber
-                   
+                    
+                    
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (!await _roleManager.RoleExistsAsync("Client"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Client"));
+                    }
+
+                    if (!await _roleManager.RoleExistsAsync("Client"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Client"));
+                    }
+                    await _userManager.AddToRoleAsync(user, "Client");
+
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -168,6 +185,10 @@ namespace WestdalePharmacyApp.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Hi {Input.FirstName}, <br> Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+
+                                      
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

@@ -12,14 +12,20 @@ namespace WestdalePharmacyApp.Models
         [Key]
         public Guid PrescriptionId { get; set; }
 
-        public string Refill { get; set; }
+        public int RefillAvailable { get; set; }
+
+        public int TimesRefill { get; set; }
+
         public byte[] ImageFile { get; set; }
 
         public string Status { get; set; }
 
+       
+        [DataType(DataType.DateTime)]
         public DateTimeOffset CreationTime { get; set; }
 
-        public DateTimeOffset UpdatedTime { get; set; }
+        [DataType(DataType.Date)]
+        public DateTimeOffset? UpdatedTime { get; set; }
 
         [Display(Name = "Special Instruction")]
         public string SpecialInstruction { get; set; }
@@ -29,5 +35,13 @@ namespace WestdalePharmacyApp.Models
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
+
+        public Prescription()
+        {
+            Status = "Not Set";
+            UpdatedTime = null;
+            RefillAvailable = 0;
+            TimesRefill = 0;
+        }
     }
 }

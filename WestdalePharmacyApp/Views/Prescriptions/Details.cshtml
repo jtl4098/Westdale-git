@@ -11,16 +11,23 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Refill)
+            @Html.DisplayNameFor(model => model.RefillAvailable)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Refill)
+            @Html.DisplayFor(model => model.RefillAvailable)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ImageFile)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageFile)
+        <dd class="col-sm-10">
+            
+                @{
+                    var base64 = Convert.ToBase64String(Model.ImageFile);
+                    var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+            }
+            <img src='@imgSrc' style="max-width:300px;max-height:300px" />
+
+        
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
@@ -46,15 +53,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SpecialInstruction)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
+        
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PrescriptionId">Edit</a> |
+    
     <a asp-action="Index">Back to List</a>
 </div>

@@ -42,13 +42,17 @@ namespace WestdalePharmacyApp.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize(Roles = "Client")]
         // GET: Prescriptions
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Prescriptions.Include(p => p.User);
+            var user = await _userManager.GetUserAsync(User);
+            var applicationDbContext = _context.Prescriptions.Where(o => o.UserId == user.Id)
+                .Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Client")]
         // GET: Prescriptions/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -68,6 +72,7 @@ namespace WestdalePharmacyApp.Controllers
             return View(prescription);
         }
 
+        [Authorize(Roles = "Client")]
         // GET: Prescriptions/Create
         public IActionResult Create()
         {
@@ -75,6 +80,7 @@ namespace WestdalePharmacyApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Client")]
         // POST: Prescriptions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -93,6 +99,8 @@ namespace WestdalePharmacyApp.Controllers
             return View(prescription);
         }
 
+
+        [Authorize(Roles = "Client")]
         // GET: Prescriptions/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -110,6 +118,7 @@ namespace WestdalePharmacyApp.Controllers
             return View(prescription);
         }
 
+        [Authorize(Roles = "Client")]
         // POST: Prescriptions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -117,11 +126,19 @@ namespace WestdalePharmacyApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("PrescriptionId,Refill,ImageFile,Status,CreationTime,UpdatedTime,SpecialInstruction,UserId")] Prescription prescription)
         {
+
             if (id != prescription.PrescriptionId)
             {
                 return NotFound();
             }
-
+            var user = await _userManager.GetUserAsync(User);
+            var tempPrescription = await _context.Prescriptions.AsNoTracking().Where(o => o.PrescriptionId == id).FirstOrDefaultAsync();             prescription.ImageFile = tempPrescription.ImageFile;
+            prescription.UpdatedTime = DateTimeOffset.Now;
+            prescription.ImageFile = tempPrescription.ImageFile;
+            prescription.CreationTime = tempPrescription.CreationTime;
+            prescription.Status = tempPrescription.Status;
+            prescription.RefillAvailable = tempPrescription.RefillAvailable;
+            prescription.UserId = user.Id;
             if (ModelState.IsValid)
             {
                 try
@@ -146,6 +163,7 @@ namespace WestdalePharmacyApp.Controllers
             return View(prescription);
         }
 
+        [Authorize(Roles = "Client")]
         // GET: Prescriptions/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -165,6 +183,7 @@ namespace WestdalePharmacyApp.Controllers
             return View(prescription);
         }
 
+        [Authorize(Roles = "Client")]
         // POST: Prescriptions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -274,7 +293,9 @@ namespace WestdalePharmacyApp.Controllers
             prescription.CreationTime = tempPrescription.CreationTime;
             prescription.Status = "Completed";
             prescription.RefillAvailable = 0;
+
             prescription.UserId = tempPrescription.UserId;
+
            
             
             var requestedPrescription = tempPrescription;

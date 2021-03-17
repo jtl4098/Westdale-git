@@ -30,7 +30,7 @@
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Requested Prescription</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="IndexA">Requested Prescription</a>
                             </li>
 
                             <li class="nav-item">
@@ -40,10 +40,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Messages</a>
                             </li>
                         }
-                        @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Client"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Create">Request Prescription</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescription History</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ask to Pharmacisist </a>
