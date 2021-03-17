@@ -293,6 +293,9 @@ namespace WestdalePharmacyApp.Controllers
             prescription.CreationTime = tempPrescription.CreationTime;
             prescription.Status = "Completed";
             prescription.RefillAvailable = 0;
+
+            prescription.UserId = tempPrescription.UserId;
+
            
             
             var requestedPrescription = tempPrescription;
