@@ -267,8 +267,8 @@ namespace WestdalePharmacyApp.Migrations
                     b.Property<byte[]>("ImageFile")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Refill")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RefillAvailable")
+                        .HasColumnType("int");
 
                     b.Property<string>("SpecialInstruction")
                         .HasColumnType("nvarchar(max)");
@@ -276,7 +276,10 @@ namespace WestdalePharmacyApp.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("UpdatedTime")
+                    b.Property<int>("TimesRefill")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedTime")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UserId")
