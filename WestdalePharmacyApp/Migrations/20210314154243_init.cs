@@ -169,11 +169,12 @@ namespace WestdalePharmacyApp.Migrations
                 columns: table => new
                 {
                     PrescriptionId = table.Column<Guid>(nullable: false),
-                    Refill = table.Column<string>(nullable: true),
+                    RefillAvailable = table.Column<int>(nullable: false),
+                    TimesRefill = table.Column<int>(nullable: false),
                     ImageFile = table.Column<byte[]>(nullable: true),
                     Status = table.Column<string>(nullable: true),
                     CreationTime = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatedTime = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(nullable: true),
                     SpecialInstruction = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
