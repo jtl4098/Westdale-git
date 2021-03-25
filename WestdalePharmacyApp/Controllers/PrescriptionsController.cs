@@ -348,7 +348,7 @@ namespace WestdalePharmacyApp.Controllers
             var prescriptionViewModel =
                     from u in _context.Users
                     join p in _context.Prescriptions on u.Id equals p.UserId
-                    where p.Status.Equals("Not Set")
+                    where (p.Status.Equals("Not Set") || p.Status.Equals("In Process") || p.Status.Equals("Refill Requested"))
                     select new PrescriptionViewModel { ApplicationUser = u, Prescription = p };
 
             return View(await prescriptionViewModel.ToListAsync());
@@ -374,7 +374,7 @@ namespace WestdalePharmacyApp.Controllers
             {
                 return NotFound();
             }
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", prescription.UserId);
+            //ViewData["UserId"] = new SelectList(prescription, "Id", "Id", prescription);
             return View( await prescription.FirstOrDefaultAsync());
         }
 
@@ -384,27 +384,36 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditA(Guid id, [Bind("PrescriptionId,Refill,ImageFile,Status,CreationTime,UpdatedTime,SpecialInstruction,UserId")] Prescription prescription)
+        public async Task<IActionResult> EditA(Guid id, [Bind("PrescriptionId,Refill,ImageFile,Status,RefillAvailable, CreationTime,UpdatedTime,SpecialInstruction,UserId")] Prescription prescription)
         {
 
             if (id != prescription.PrescriptionId)
             {
                 return NotFound();
             }
-            var user = await _userManager.GetUserAsync(User);
-            var tempPrescription = await _context.Prescriptions.AsNoTracking().Where(o => o.PrescriptionId == id).FirstOrDefaultAsync(); prescription.ImageFile = tempPrescription.ImageFile;
+            //var user = await _userManager.GetUserAsync(User);
+            var user = _context.Prescriptions.AsNoTracking().Where(o => o.PrescriptionId == prescription.PrescriptionId ).ToList();
+            
+            var tempPrescription = await _context.Prescriptions.AsNoTracking().Where(o => o.PrescriptionId == id).FirstOrDefaultAsync();
+            prescription.UserId = user[0].UserId;
             prescription.UpdatedTime = DateTimeOffset.Now;
             prescription.ImageFile = tempPrescription.ImageFile;
             prescription.CreationTime = tempPrescription.CreationTime;
-            prescription.Status = tempPrescription.Status;
-            prescription.RefillAvailable = tempPrescription.RefillAvailable;
-            prescription.UserId = user.Id;
+            
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(prescription);
                     await _context.SaveChangesAsync();
+                    if (prescription.Status.Equals("Completed")) {
+                        var userEmail =
+                           from u in _context.Users
+                           join p in _context.Prescriptions on u.Id equals p.UserId
+                           where p.PrescriptionId == id
+                           select new PrescriptionViewModel { ApplicationUser = u, Prescription = p };
+                        await _emailSender.SendEmailAsync(userEmail.FirstOrDefault().ApplicationUser.Email, "Prescription Request", "Your prescription is ready...");
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -417,7 +426,7 @@ namespace WestdalePharmacyApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexA));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", prescription.UserId);
             return View(prescription);
