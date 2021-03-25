@@ -94,23 +94,29 @@
 </dl>
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="EditA">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Prescription.PrescriptionId" />
-                      
+
 
                 <div class="form-group">
                     <label asp-for="Prescription.RefillAvailable" class="control-label"></label>
-                    <input asp-for="Prescription.RefillAvailable" class="form-control" disabled />
+                    <input asp-for="Prescription.RefillAvailable" class="form-control" />
                     <span asp-validation-for="Prescription.RefillAvailable" class="text-danger"></span>
                 </div>
 
-                
+
                 <div class="form-group">
                     <label asp-for="Prescription.Status" class="control-label"></label>
-                    <input asp-for="Prescription.Status" class="form-control" disabled />
+                    <select asp-for="Prescription.Status" class="form-control">
+                        <option value="Not Set">Not Set</option>
+                        <option value="In Process">In Process</option>
+                        <option value="Completed">Completed</option>
+                    </select>
                     <span asp-validation-for="Prescription.Status" class="text-danger"></span>
                 </div>
+
+
                 <div class="form-group">
                     <label asp-for="Prescription.CreationTime" class="control-label"></label>
                     <input asp-for="Prescription.CreationTime" class="form-control" disabled />
@@ -123,10 +129,10 @@
                     <span asp-validation-for="Prescription.SpecialInstruction" class="text-danger"></span>
                 </div>
                 @*<div class="form-group">
-                        <label asp-for="UserId" class="control-label"></label>
-                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                        <span asp-validation-for="UserId" class="text-danger"></span>
-                    </div>*@
+            <label asp-for="Prescription.UserId" class="control-label"></label>
+            <select asp-for="Prescription.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+            <span asp-validation-for="Prescription.UserId" class="text-danger"></span>
+        </div>*@
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
