@@ -5,6 +5,7 @@
         ViewData["Title"] = "Index";
     }
 
+
     <h1>Index</h1>
 
 
@@ -73,7 +74,9 @@
 
                     <td>
                         @{
-                            if (item.Status.Equals("Completed"))
+
+                            if (item.Status.Equals("Completed") || item.Status.Equals("Refill Requested"))
+
                             {
                                 <a asp-action="Details" asp-route-id="@item.PrescriptionId">Details</a>
                             }
