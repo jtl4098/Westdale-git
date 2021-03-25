@@ -10,7 +10,7 @@ using WestdalePharmacyApp.Data;
 namespace WestdalePharmacyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210314154243_init")]
+    [Migration("20210322212631_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

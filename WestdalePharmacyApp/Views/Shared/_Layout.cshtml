@@ -39,6 +39,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Messages</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+                            </li>
                         }
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Client"))
                         {
