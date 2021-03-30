@@ -76,7 +76,7 @@ namespace WestdalePharmacyApp.Controllers
                 message.MessageId = Guid.NewGuid();
                 message.Timestamp = DateTimeOffset.Now;
                 message.To_UserId = "f23dbc26-9697-4dd1-a8ad-ebc0f7304b1f";
-                await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
+                await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", $"Hello <b>{message.To_User}</b> Thank you for your message, one of our team member will contact you shortly. <br><br> Thank you, <br>Westdale Pharmacy ");
 
 
              
