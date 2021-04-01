@@ -75,7 +75,7 @@
                     <td>
                         @{
 
-                            if (item.Status.Equals("Completed") || item.Status.Equals("Refill Requested"))
+                            if (item.Status.Equals("Completed") || item.Status.Equals("Refill Requested") || item.Status.Equals("In Process"))
 
                             {
                                 <a asp-action="Details" asp-route-id="@item.PrescriptionId">Details</a>

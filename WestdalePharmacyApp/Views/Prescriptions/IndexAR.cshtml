@@ -1,0 +1,95 @@
+﻿@model IEnumerable<WestdalePharmacyApp.Models.PrescriptionViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<form asp-action="IndexAR" method="post">
+    <p>
+        <strong>First Name / Last Name:</strong>
+        <input type="search" name="value" value="@ViewBag.SearchedUser" />
+        <input type="submit" value="Filter" class="btn btn-primary" /> |
+        <a asp-action="IndexAR"> All Clients</a>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Prescription.Status)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Prescription.CreationTime)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Prescription.ImageFile)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Prescription.UpdatedTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prescription.SpecialInstruction)
+        </th>*@
+
+            <th>
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderByDescending(item => item.Prescription.CreationTime)) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescription.Status)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescription.CreationTime)
+            </td>
+            @*<td>
+                @{
+                    var base64 = Convert.ToBase64String(item.Prescription.ImageFile);
+                    var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+                }
+                <img src='@imgSrc' style="max-width:100px;max-height:100px" />
+
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescription.UpdatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescription.SpecialInstruction)
+            </td>*@
+            
+            <td>
+               
+                        <a asp-action="DetailsAR" asp-route-id="@item.Prescription.PrescriptionId"> Details </a>
+                        <a asp-action="DeleteAR" asp-route-id="@item.Prescription.PrescriptionId"> Delete </a>
+                   
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
