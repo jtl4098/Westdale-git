@@ -33,6 +33,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="IndexA">Requested Prescription</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="IndexAR">Archives</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Messages</a>
@@ -50,7 +53,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescription History</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ask to Pharmacist </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForUser" asp-action="Index">Ask to Pharmacist </a>
                             </li>
                         }
                         @if (!SignInManager.IsSignedIn(User))
