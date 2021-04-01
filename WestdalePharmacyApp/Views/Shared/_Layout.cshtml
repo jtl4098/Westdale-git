@@ -35,11 +35,9 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Messages</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForAdmin" asp-action="Index">Messages</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Messages</a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
                             </li>
@@ -50,14 +48,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Create">Request Prescription</a>
                             </li>
                             <li class="nav-item">
-<<<<<<< HEAD
+
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescription History</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ask to Pharmacisist </a>
-=======
+                              
+
                                 <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForUser" asp-action="Index">Ask to Pharmacisist </a>
->>>>>>> tk
+
                             </li>
                         }
                         @if (!SignInManager.IsSignedIn(User))
@@ -67,7 +65,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="Index">Ask to Pharmacisist </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="Create">Ask to Pharmacisist </a>
                             </li>
                         }
 

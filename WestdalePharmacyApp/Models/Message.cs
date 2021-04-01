@@ -17,14 +17,17 @@ namespace WestdalePharmacyApp.Models
 
         public string body { get; set; }
 
+
+
+ 
         public DateTimeOffset Timestamp { get; set; }
 
 
-
+        
         [ForeignKey("UserId")]
         public virtual ApplicationUser To_User { get; set; }
 
-
+        [Display(Name = "From.")]
         public string From_UserEmail { get; set; }
 
         public string To_UserId { get; set; }
