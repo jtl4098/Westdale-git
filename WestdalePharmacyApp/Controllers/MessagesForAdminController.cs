@@ -83,7 +83,7 @@ namespace WestdalePharmacyApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
-                var toUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(message.From_UserEmail));
+                var toUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(message.To_UserId));
                 if (toUser != null)
                 {
                     message.To_UserId = toUser.Id;
@@ -92,6 +92,7 @@ namespace WestdalePharmacyApp.Controllers
                 message.From_UserEmail = user.Email;
                 message.MessageId = Guid.NewGuid();
                 message.Timestamp = DateTimeOffset.Now;
+                message.IsRegistered = true;
                 _context.Add(message);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -232,7 +233,7 @@ namespace WestdalePharmacyApp.Controllers
                                 }).FirstOrDefault();
                 var adminUser = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(roleUser.UserId));
                 message.From_UserEmail = adminUser.Email;
-
+                message.IsRegistered = true;
 
                 //Send Notification via Email to admin and user
                 //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");

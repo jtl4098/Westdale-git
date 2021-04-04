@@ -264,6 +264,9 @@ namespace WestdalePharmacyApp.Migrations
                     b.Property<string>("From_UserEmail")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsRegistered")
+                        .HasColumnType("bit");
+
                     b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("datetimeoffset");
 

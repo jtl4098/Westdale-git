@@ -111,7 +111,7 @@ namespace WestdalePharmacyApp.Controllers
                 //Send Notification via Email to admin and user
                 //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
                 //await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", "Successfully get it");
-
+                message.IsRegistered = true;
 
 
                 _context.Add(message);
