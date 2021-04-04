@@ -17,6 +17,9 @@ namespace WestdalePharmacyApp.Models
 
         public string body { get; set; }
 
+        [Display(Name ="Registered User")]
+        public bool IsRegistered { get; set; }
+
 
 
  
