@@ -25,13 +25,16 @@
                 @Html.DisplayNameFor(model => model.From_UserEmail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.To_UserId)
+                @Html.DisplayNameFor(model => model.IsRegistered)
             </th>
+
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -46,14 +49,14 @@
                 @Html.DisplayFor(modelItem => item.From_UserEmail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.To_UserId)
+                @Html.DisplayFor(modelItem => item.IsRegistered)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MessageId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.MessageId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MessageId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.MessageId">Delete</a> |
+                <a asp-action="Reply" asp-route-id="@item.MessageId">Reply</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

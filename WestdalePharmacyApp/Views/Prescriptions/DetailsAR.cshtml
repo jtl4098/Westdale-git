@@ -1,0 +1,136 @@
+﻿@model WestdalePharmacyApp.Models.PrescriptionViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Prescription</h4>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Prescription.ImageFile)
+    </dt>
+    <dd class="col-sm-10">
+
+        @{
+            var base64 = Convert.ToBase64String(Model.Prescription.ImageFile);
+            var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+        }
+        <img src='@imgSrc' style="max-width:500px;max-height:500px" />
+
+
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Prescription.RefillAvailable)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Prescription.RefillAvailable)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Prescription.TimesRefill)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Prescription.TimesRefill)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Prescription.Status)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Prescription.Status)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Prescription.CreationTime)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Prescription.CreationTime)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Prescription.SpecialInstruction)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Prescription.SpecialInstruction)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.FirstName)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.FirstName)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.LastName)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.BirthDate)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.BirthDate)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.Gender)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.Gender)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.Allergies)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.Allergies)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.HealthCard)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.HealthCard)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.InsuranceNumber)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.InsuranceNumber)
+    </dd>
+
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.PhoneNumber)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.AddressLine1)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.AddressLine1)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.AddressLine2)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.AddressLine2)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ApplicationUser.City)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ApplicationUser.City)
+    </dd>
+
+
+</dl>
+
+   
+
+    <div>
+        <a asp-action="IndexAR">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
