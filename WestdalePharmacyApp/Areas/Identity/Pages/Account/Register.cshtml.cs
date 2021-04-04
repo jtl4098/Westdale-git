@@ -184,7 +184,7 @@ namespace WestdalePharmacyApp.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Hi {Input.FirstName}, <br> Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Hi {Input.FirstName}, <br> Thank you for registering with us. To complete your registration, we need you to verify your email address. <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'><button class=\"btn btn-primary\">Verify Email</button></a><br><br>Thank you for your time,<br> Westdale Pharmacy.");
 
 
                                       
