@@ -234,13 +234,16 @@ namespace WestdalePharmacyApp.Controllers
 
                     if (prescription.PrescriptionId != null)
                     {
+
                         var roleUser = await _context.Roles.SingleOrDefaultAsync(m => m.Name == "Admin");
                         var adminUserId = await _context.UserRoles.Where(m => m.RoleId == roleUser.Id).FirstOrDefaultAsync();
                         var adminUser = await _context.Users.Where(o => o.Id == adminUserId.UserId).FirstOrDefaultAsync();
                         await _emailSender.SendEmailAsync(adminUser.Email, "New Prescription Request ", user.FirstName + " " + user.LastName + " requested prescription...");
 
-                        await _emailSender.SendEmailAsync(user.Email, "Prescription Request", "Successfully get it");
-                        return "Thank you! Your request has been successfully submitted!";
+                        await _emailSender.SendEmailAsync(user.Email, "Prescription Request", 
+                            $"Dear <b> {user.FirstName} {user.LastName} </b> <br> Thank you for uploading your prescription. <br>We succesfully receieved your prescription at {prescription.CreationTime.ToString("HH:mm")} on {DateTime.Today.ToString("dd-MM-yyyy")} a one of our team member will contact you within the next 24 hours with more details. <br><br>Thank you,<br> Westdale Pharmacy Team");
+                        return "Thank you! Your prescription has been successfully submitted!";
+
                     }
                 }
             }

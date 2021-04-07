@@ -79,6 +79,7 @@ namespace WestdalePharmacyApp.Controllers
 
 
 
+
                 var roleUser = (from role in _context.UserRoles
                                 join u in _context.Users on role.UserId equals u.Id
                                 join a in _context.Roles on role.RoleId equals a.Id
@@ -96,6 +97,8 @@ namespace WestdalePharmacyApp.Controllers
                 //Send Notification via Email to admin and user
                 //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
                 //await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", "Successfully get it");
+                await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", $"Hello <b>{message.To_User}</b> Thank you for your message, one of our team member will contact you shortly. <br><br> Thank you, <br>Westdale Pharmacy ");
+
 
 
 
