@@ -79,7 +79,7 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Create([Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             if (id != message.MessageId)
             {
@@ -203,7 +203,7 @@ namespace WestdalePharmacyApp.Controllers
             }
             ViewData["OriginMessage"] = message.From_UserEmail;
             ViewData["OriginTitle"] = message.Title;
-            ViewData["OriginBody"] = message.body;
+            ViewData["OriginBody"] = message.Body;
             senderEmail = message.From_UserEmail;
             TempData["MsgEmail"] = message.From_UserEmail;
             return View();
@@ -214,7 +214,7 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reply(Guid id,[Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Reply(Guid id,[Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             if (ModelState.IsValid)
             {
