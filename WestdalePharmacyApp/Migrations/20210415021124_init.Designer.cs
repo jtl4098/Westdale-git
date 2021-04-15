@@ -10,7 +10,7 @@ using WestdalePharmacyApp.Data;
 namespace WestdalePharmacyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210409023521_init")]
+    [Migration("20210415021124_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -263,6 +263,9 @@ namespace WestdalePharmacyApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("From_UserEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -283,9 +286,6 @@ namespace WestdalePharmacyApp.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("body")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MessageId");
 

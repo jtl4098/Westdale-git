@@ -12,18 +12,22 @@ namespace WestdalePharmacyApp.Models
         [Key]
         public Guid PrescriptionId { get; set; }
 
+        [Display(Name = "Available Refill")]
         public int RefillAvailable { get; set; }
 
+        [Display(Name = "Refill Times")]
         public int TimesRefill { get; set; }
 
+        [Display(Name = "Prescription")]
         public byte[] ImageFile { get; set; }
 
         public string Status { get; set; }
 
-
+        [Display(Name = "Creation Time")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy hh:mm tt}")]
         public DateTimeOffset CreationTime { get; set; }
 
+        [Display(Name = "Update Time")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy hh:mm tt}")]
         public DateTimeOffset? UpdatedTime { get; set; }
 

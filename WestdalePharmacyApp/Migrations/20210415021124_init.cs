@@ -170,7 +170,7 @@ namespace WestdalePharmacyApp.Migrations
                 {
                     MessageId = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    body = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
                     IsRegistered = table.Column<bool>(nullable: false),
                     Timestamp = table.Column<DateTimeOffset>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
