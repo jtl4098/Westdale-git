@@ -96,7 +96,7 @@ namespace WestdalePharmacyApp.Controllers
                 message.MessageId = Guid.NewGuid();
                 message.Timestamp = DateTimeOffset.Now;
                 message.IsRegistered = true;
-                message.IsReply = false;
+                message.IsReply = true;
                 _context.Add(message);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
