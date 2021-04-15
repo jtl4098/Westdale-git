@@ -35,6 +35,7 @@ namespace WestdalePharmacyApp.Models
 
         public string To_UserId { get; set; }
 
+        public bool IsReply { get; set; }
 
 
     }

@@ -93,6 +93,7 @@ namespace WestdalePharmacyApp.Controllers
 
                 message.IsRegistered = false;
                 message.To_UserId = roleUser.UserId;
+                message.IsReply = false;
                 message.To_User = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(roleUser.UserId));
                 //Send Notification via Email to admin and user
                 //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");

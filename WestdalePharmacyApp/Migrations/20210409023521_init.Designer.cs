@@ -10,7 +10,7 @@ using WestdalePharmacyApp.Data;
 namespace WestdalePharmacyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210325032947_init")]
+    [Migration("20210409023521_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,6 +265,12 @@ namespace WestdalePharmacyApp.Migrations
 
                     b.Property<string>("From_UserEmail")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRegistered")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReply")
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("datetimeoffset");

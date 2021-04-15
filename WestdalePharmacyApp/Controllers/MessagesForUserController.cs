@@ -92,7 +92,7 @@ namespace WestdalePharmacyApp.Controllers
                 message.MessageId = Guid.NewGuid();
                 message.Timestamp = DateTimeOffset.Now;
                 message.From_UserEmail = user.Email;
-
+                message.IsReply = false;
 
 
                 var roleUser = (from role in _context.UserRoles

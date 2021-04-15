@@ -35,7 +35,8 @@ namespace WestdalePharmacyApp.Controllers
         {
             //var user = await _userManager.GetUserAsync(User);
             //return View(await _context.Messages.Where( m=> m.To_UserId.Equals(user.Id)).ToListAsync());
-            return View(await _context.Messages.OrderByDescending(m => m.Timestamp).ToListAsync());
+            var message = await _context.Messages.Where(m => m.IsReply == false).OrderByDescending(m => m.Timestamp).ToListAsync();
+            return View(message);
         }
 
         // GET: MessagesForAdmin/Details/5
@@ -61,7 +62,7 @@ namespace WestdalePharmacyApp.Controllers
             {
                 ViewBag.ToUser = "";
             }
-            
+
 
             return View(message);
         }
@@ -93,6 +94,7 @@ namespace WestdalePharmacyApp.Controllers
                 message.MessageId = Guid.NewGuid();
                 message.Timestamp = DateTimeOffset.Now;
                 message.IsRegistered = true;
+                message.IsReply = false;
                 _context.Add(message);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -195,11 +197,13 @@ namespace WestdalePharmacyApp.Controllers
             }
 
             var message = await _context.Messages.FindAsync(id);
-            if(message == null)
+            if (message == null)
             {
                 return NotFound();
             }
             ViewData["OriginMessage"] = message.From_UserEmail;
+            ViewData["OriginTitle"] = message.Title;
+            ViewData["OriginBody"] = message.body;
             senderEmail = message.From_UserEmail;
             TempData["MsgEmail"] = message.From_UserEmail;
             return View();
@@ -210,13 +214,20 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reply([Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Reply(Guid id,[Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             if (ModelState.IsValid)
             {
-                
+
+                if(id == null)
+                {
+                    NotFound();
+                }
+                message.IsReply = true;
+                _context.Update(message);
+
                 var toUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(TempData["MsgEmail"].ToString()));
-                if(toUser != null)
+                if (toUser != null)
                 {
                     message.To_UserId = toUser.Id;
                     message.To_User = toUser;
@@ -233,11 +244,12 @@ namespace WestdalePharmacyApp.Controllers
                                 }).FirstOrDefault();
                 var adminUser = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(roleUser.UserId));
                 message.From_UserEmail = adminUser.Email;
-                message.IsRegistered = true;
+
 
                 //Send Notification via Email to admin and user
                 //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
                 //await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", "Successfully get it");
+                message.IsRegistered = true;
                 message.Timestamp = DateTimeOffset.Now;
                 message.MessageId = Guid.NewGuid();
                 _context.Add(message);
@@ -246,9 +258,12 @@ namespace WestdalePharmacyApp.Controllers
             }
             return View(message);
         }
+        // GET: Prescriptions for admin
+        public async Task<IActionResult> IndexAR()
+        {
 
-
-
-
+            var message = await _context.Messages.Where(m => m.IsReply == true).OrderByDescending(m => m.Timestamp).ToListAsync();
+            return View(message);
+        }
     }
 }

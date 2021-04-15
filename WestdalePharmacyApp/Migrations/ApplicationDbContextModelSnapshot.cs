@@ -267,6 +267,9 @@ namespace WestdalePharmacyApp.Migrations
                     b.Property<bool>("IsRegistered")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsReply")
+                        .HasColumnType("bit");
+
                     b.Property<DateTimeOffset>("Timestamp")
                         .HasColumnType("datetimeoffset");
 
