@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<WestdalePharmacyApp.Models.Message>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "IndexAR";
 }
 
-<h1>Index</h1>
+<h1>IndexAR</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -19,14 +19,13 @@
                 @Html.DisplayNameFor(model => model.Body)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.IsRegistered)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Timestamp)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.From_UserEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.To_UserId)
-            </th>
+
+
             <th></th>
         </tr>
     </thead>
@@ -40,16 +39,15 @@
                 @Html.DisplayFor(modelItem => item.Body)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.IsRegistered)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Timestamp)
             </td>
+
+
             <td>
-                @Html.DisplayFor(modelItem => item.From_UserEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.To_UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MessageId">Edit</a> |
+
                 <a asp-action="Details" asp-route-id="@item.MessageId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.MessageId">Delete</a>
             </td>

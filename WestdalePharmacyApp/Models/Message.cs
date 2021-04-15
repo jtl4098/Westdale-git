@@ -15,7 +15,7 @@ namespace WestdalePharmacyApp.Models
 
         public string Title { get; set; }
 
-        public string body { get; set; }
+        public string Body { get; set; }
 
         [Display(Name ="Registered User")]
         public bool IsRegistered { get; set; }
@@ -35,6 +35,7 @@ namespace WestdalePharmacyApp.Models
 
         public string To_UserId { get; set; }
 
+        public bool IsReply { get; set; }
 
 
     }

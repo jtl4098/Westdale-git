@@ -68,7 +68,7 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Create([Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             //var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
@@ -93,13 +93,16 @@ namespace WestdalePharmacyApp.Controllers
 
                 message.IsRegistered = false;
                 message.To_UserId = roleUser.UserId;
+                message.IsReply = false;
                 message.To_User = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(roleUser.UserId));
                 //Send Notification via Email to admin and user
                 //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
-                //await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", "Successfully get it");
+                
                 await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", $"Hello <b>{message.To_User}</b> Thank you for your message, one of our team member will contact you shortly. <br><br> Thank you, <br>Westdale Pharmacy ");
 
-
+                
+                await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", $"<h1>--New Message--</h1> <br> From.<b>{message.From_UserEmail}</b> <br> Title : {message.Title} <br> <p>{message.Body}</p>");
+                
 
 
 
@@ -136,7 +139,7 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             if (id != message.MessageId)
             {
