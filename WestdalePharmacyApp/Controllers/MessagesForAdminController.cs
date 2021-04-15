@@ -85,6 +85,8 @@ namespace WestdalePharmacyApp.Controllers
             {
                 var user = await _userManager.GetUserAsync(User);
                 var toUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(message.To_UserId));
+                await _emailSender.SendEmailAsync(message.To_UserId, "Westdale Pharmacy - Email Request", $"<h1>--New Message--</h1> <br> From.<b>{user.Email}</b> <br> Title : {message.Title} <br> <p>{message.Body}</p>");
+
                 if (toUser != null)
                 {
                     message.To_UserId = toUser.Id;
