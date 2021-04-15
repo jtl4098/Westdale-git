@@ -26,7 +26,7 @@ namespace WestdalePharmacyApp.Controllers
             return View();
         }
 
-        [Authorize (Roles ="Admin")]
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();

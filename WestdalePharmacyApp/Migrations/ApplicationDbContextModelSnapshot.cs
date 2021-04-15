@@ -261,6 +261,9 @@ namespace WestdalePharmacyApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("From_UserEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -281,9 +284,6 @@ namespace WestdalePharmacyApp.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("body")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MessageId");
 

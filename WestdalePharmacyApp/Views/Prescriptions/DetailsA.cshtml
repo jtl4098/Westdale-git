@@ -1,12 +1,12 @@
 ﻿@model WestdalePharmacyApp.Models.PrescriptionViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Edit</h1>
 
-<h4>Prescription</h4>
+
+<h4>Prescription Details</h4>
 <hr />
 <dl class="row">
     <dt class="col-sm-2">
@@ -55,19 +55,19 @@
         @Html.DisplayFor(model => model.Prescription.SpecialInstruction)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.FirstName)
+        First Name
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.FirstName)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.LastName)
+        Last Name
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.LastName)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.BirthDate)
+        Birth Date
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.BirthDate)
@@ -85,32 +85,32 @@
         @Html.DisplayFor(model => model.ApplicationUser.Allergies)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.HealthCard)
+        Health Card
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.HealthCard)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.InsuranceNumber)
+        Insurance Number
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.InsuranceNumber)
     </dd>
 
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.PhoneNumber)
+        Phone Number
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.PhoneNumber)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.AddressLine1)
+        Address Line1
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.AddressLine1)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ApplicationUser.AddressLine2)
+        Address Line2
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.ApplicationUser.AddressLine2)

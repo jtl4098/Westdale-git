@@ -35,8 +35,13 @@
                             </li>
                             <li class="nav-item">
 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="IndexAR">Prescription Archives</a>
 
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForAdmin" asp-action="Index">New Messages</a>
+                            </li>
+
+
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForAdmin" asp-action="Index">New Messages</a>
                             </li>
 
                             <li class="nav-item">
@@ -44,13 +49,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForAdmin" asp-action="IndexAR">Messages</a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="IndexAR">Archives</a>
 
-                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
 
                         }
@@ -70,6 +76,10 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForUser" asp-action="Index">Ask to Pharmacist </a>
 
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
                         }
                         @if (!SignInManager.IsSignedIn(User))
                         {
@@ -83,12 +93,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="Create">Ask to Pharmacisist </a>
 
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
                         }
 
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
