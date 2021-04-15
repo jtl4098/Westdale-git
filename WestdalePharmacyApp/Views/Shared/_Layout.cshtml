@@ -40,24 +40,27 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
                             </li>
-                        }
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Client"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Create">Request Prescription</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescription History</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ask to Pharmacist </a>
-                            </li>
-                        }
-                        @if (!SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Create">Request Prescription</a>
-                            </li>
+                            }
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Client"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Create">Request Prescription</a>
+                                </li>
+                                <li class="nav-item">
+                                  
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Index">Prescription History</a>
+                                </li>
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="MessagesForUser" asp-action="Index">Ask to Pharmacist </a>
+                                 
+                                </li>
+                            }
+                            @if (!SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Prescriptions" asp-action="Create">Request Prescription</a>
+                                </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="Index">Ask to Pharmacist </a>
