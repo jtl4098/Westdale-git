@@ -9,37 +9,32 @@
 		{
 	//admin
 <div class="card-deck">
-	<div class="card">
-		<img class="card-img-top" src="~/images/profile.png" alt="Profile">
-		<div class="card-body">
-			<h5 class="card-title">View All Clients </h5>
-			@*<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>*@
+	<div class="card"  >
+		<a asp-controller="Clients" asp-action="Index">
+			<img class="card-img-top" src="~/images/profile.png" alt="Profile">
+			<div class="card-body">
+				<h5 class="card-title">View All Clients </h5>
 
-		</div>
+			</div>
+		</a>
 	</div>
 	<div class="card">
-		<img class="card-img-top" src="~/images/prescription.png" alt="Perscription">
-		<div class="card-body">
-			<h5 class="card-title">View Prescription Request</h5>
-			@*<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>*@
+		<a asp-controller="Prescriptions" asp-action="IndexA">
+			<img class="card-img-top" src="~/images/prescription.png" alt="Perscription">
+			<div class="card-body">
+				<h5 class="card-title">View Prescription Request</h5>
 
-		</div>
+			</div>
+		</a>
 	</div>
 	<div class="card">
-		<img class="card-img-top" src="~/images/message.png" alt="Message">
-		<div class="card-body">
-			<h5 class="card-title">View Registration Request </h5>
-			@*<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>*@
-
-		</div>
-	</div>
-	<div class="card">
-		<img class="card-img-top" src="~/images/prescriptionHistory.png" alt="Prescription History">
-		<div class="card-body">
-			<h5 class="card-title">View Message</h5>
-			@*<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
-		</div>
+		<a  asp-controller="MessagesForAdmin" asp-action="Index">
+			<img class="card-img-top" src="~/images/message.png" alt="Message">
+			<div class="card-body">
+				<h5 class="card-title">View Messages </h5>
+	
+			</div>
+		</a>
 	</div>
 </div>
 
@@ -48,46 +43,41 @@
 {
 	//Client
 <div class="card-deck">
+	<div class="card" >
+		<a asp-controller="MessagesForUser" asp-action="Index">
+			<img class="card-img-top" src="~/images/message.png" alt="Message" >
+			<div class="card-body">
+				<h5 class="card-title">Send New Message </h5>
+			</div>
+		</a>
+	</div>
+	<div class="card" >
+		<a asp-controller="Prescriptions" asp-action="Create">
+			<img class="card-img-top" src="~/images/medical-prescription.png" alt="Create Prescription" >
+			<div class="card-body">
+				<h5 class="card-title">Send New Prescription</h5>
+			</div>
+		</a>
+	</div>
+	<div class="card"  >
+		<a asp-controller="Prescriptions" asp-action="Index">
+			<img class="card-img-top" src="~/images/prescription.png" alt="Pescription Index">
+			<div class="card-body">
+				<h5 class="card-title">Message History </h5>
+		
+			</div>
+		</a>
+	</div>
+	
 	<div class="card">
-		<img class="card-img-top" src="~/images/message.png" alt="Message">
-		<div class="card-body">
-			<h5 class="card-title">Send New Message </h5>
-			@*<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>*@
+		<a asp-area="Identity" asp-page="/Account/Manage/Index">
+			<img class="card-img-top" src="~/images/profile.png" alt="Profile">
+			<div class="card-body">
+				<h5 class="card-title">Update Information - no link at the moment</h5>
 
-		</div>
-	</div>
-	<div class="card">
-		<img class="card-img-top" src="~/images/medical-prescription.png" alt="Message">
-		<div class="card-body">
-			<h5 class="card-title">Send New Prescription</h5>
-			@*<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>*@
-
-		</div>
-	</div>
-	<div class="card">
-		<img class="card-img-top" src="~/images/message.png" alt="Message">
-		<div class="card-body">
-			<h5 class="card-title">Message History </h5>
-			@*<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>*@
-
-		</div>
-	</div>
-	<div class="card">
-		<img class="card-img-top" src="~/images/prescriptionHistory.png" alt="Prescription History">
-		<div class="card-body">
-			<h5 class="card-title">Prescription History</h5>
-			@*<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
-		</div>
-	</div>
-	<div class="card">
-		<img class="card-img-top" src="~/images/profile.png" alt="Profile">
-		<div class="card-body">
-			<h5 class="card-title">Update Information</h5>
-			@*<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
-		</div>
-	</div>
+			</div>
+		</a>
+</div>
 </div>
 }
 
