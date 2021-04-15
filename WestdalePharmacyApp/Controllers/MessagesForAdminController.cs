@@ -206,6 +206,7 @@ namespace WestdalePharmacyApp.Controllers
             ViewData["OriginBody"] = message.Body;
             senderEmail = message.From_UserEmail;
             TempData["MsgEmail"] = message.From_UserEmail;
+            TempData["priId"] = id;
             return View();
         }
 
@@ -224,7 +225,12 @@ namespace WestdalePharmacyApp.Controllers
                     NotFound();
                 }
                 message.IsReply = true;
+                var priMessage = await _context.Messages.FindAsync(TempData["priId"]);
+                priMessage.IsReply = true;
                 _context.Update(message);
+                _context.Update(priMessage);
+
+
 
                 var toUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(TempData["MsgEmail"].ToString()));
                 if (toUser != null)
