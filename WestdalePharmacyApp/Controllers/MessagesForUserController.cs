@@ -39,11 +39,11 @@ namespace WestdalePharmacyApp.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             var messages = (from m in _context.Messages
-                            where m.From_UserEmail == user.Email
+                            where m.From_UserEmail == user.Email || (m.To_UserId.Equals(user.Id))
                             select m 
                             
                             );
-            return View(await messages.ToListAsync());
+            return View(await messages.OrderByDescending(m=> m.Timestamp).ToListAsync());
         }
 
         // GET: MessagesForUser/Details/5
@@ -76,23 +76,49 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Create([Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             var user = await _userManager.GetUserAsync(User);
+
+         
+            
+
+            
             if (ModelState.IsValid)
             {
+
+
+
                 message.MessageId = Guid.NewGuid();
                 message.Timestamp = DateTimeOffset.Now;
                 message.From_UserEmail = user.Email;
-                message.To_UserId = "f23dbc26-9697-4dd1-a8ad-ebc0f7304b1f";
-                await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
+                message.IsReply = false;
 
 
+                var roleUser = (from role in _context.UserRoles
+                                join u in _context.Users on role.UserId equals u.Id
+                                join a in _context.Roles on role.RoleId equals a.Id
+                                where (a.NormalizedName.Equals("ADMIN"))
+                                select new UserViewModel
+                                {
+                                    UserId = u.Id,
+                                    RoleId = a.Id,
+                                    NormalizedName = a.NormalizedName
+                                }).FirstOrDefault();
 
+                message.To_UserId = roleUser.UserId;
+                message.To_User = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(roleUser.UserId));
+
+                //Send Notification via Email to admin and user
+                await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", $"Hello <b>{message.To_User}</b> Thank you for your message, one of our team member will contact you shortly. <br><br> Thank you, <br>Westdale Pharmacy ");
+                await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", $"<h1>--New Message--</h1> <br> From.<b>{message.From_UserEmail}</b> <br> Title : {message.Title} <br> <p>{message.Body}</p>");
+
+                message.IsRegistered = true;
 
 
                 _context.Add(message);
                 await _context.SaveChangesAsync();
+
 
 
 
@@ -123,7 +149,7 @@ namespace WestdalePharmacyApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MessageId,Title,body,Timestamp,From_UserEmail,To_UserId")] Message message)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MessageId,Title,Body,Timestamp,From_UserEmail,To_UserId")] Message message)
         {
             if (id != message.MessageId)
             {

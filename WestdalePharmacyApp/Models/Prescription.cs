@@ -20,11 +20,11 @@ namespace WestdalePharmacyApp.Models
 
         public string Status { get; set; }
 
-       
-        [DataType(DataType.DateTime)]
+
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy hh:mm tt}")]
         public DateTimeOffset CreationTime { get; set; }
 
-        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy hh:mm tt}")]
         public DateTimeOffset? UpdatedTime { get; set; }
 
         [Display(Name = "Special Instruction")]

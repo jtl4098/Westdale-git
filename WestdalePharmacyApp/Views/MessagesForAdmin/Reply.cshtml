@@ -1,39 +1,42 @@
 ﻿@model WestdalePharmacyApp.Models.Message
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Reply";
+    
 }
 
-<h1>Create</h1>
+<h1>Reply</h1>
 
 <h4>Message</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Reply">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label class="control-label">To.</label>
-                <input asp-for="To_UserId" class="form-control" />
+                <label class="control-label">To..</label>
+                <input asp-for="To_UserId" class="form-control" value="@ViewData["OriginMessage"]" disabled />
                 <span asp-validation-for="To_UserId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control" value="Re: @ViewData["OriginTitle"]"/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+           
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body" class="form-control" cols="40" , rows="7"> </textarea>
-                @*<input asp-for="body" class="form-control" />*@
+                <textarea asp-for="Body" class="form-control" cols="40" , rows="7"></textarea>
+             
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
 
 
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Reply" class="btn btn-primary" />
             </div>
         </form>
     </div>

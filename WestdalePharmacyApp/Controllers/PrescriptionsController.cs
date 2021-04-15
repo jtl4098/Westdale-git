@@ -49,6 +49,7 @@ namespace WestdalePharmacyApp.Controllers
             var user = await _userManager.GetUserAsync(User);
             var applicationDbContext = _context.Prescriptions.Where(o => o.UserId == user.Id)
                 .Include(p => p.User);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -90,10 +91,16 @@ namespace WestdalePharmacyApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                
+
                 prescription.PrescriptionId = Guid.NewGuid();
                 _context.Add(prescription);
                 await _context.SaveChangesAsync();
+
+                
                 return RedirectToAction(nameof(Index));
+
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", prescription.UserId);
             return View(prescription);
@@ -227,8 +234,16 @@ namespace WestdalePharmacyApp.Controllers
 
                     if (prescription.PrescriptionId != null)
                     {
-                        await _emailSender.SendEmailAsync(user.Email, "Prescription Request", "Successfully get it");
-                        return "Thank you! Your request has been successfully submitted!";
+
+                        var roleUser = await _context.Roles.SingleOrDefaultAsync(m => m.Name == "Admin");
+                        var adminUserId = await _context.UserRoles.Where(m => m.RoleId == roleUser.Id).FirstOrDefaultAsync();
+                        var adminUser = await _context.Users.Where(o => o.Id == adminUserId.UserId).FirstOrDefaultAsync();
+                        await _emailSender.SendEmailAsync(adminUser.Email, "New Prescription Request ", user.FirstName + " " + user.LastName + " requested prescription...");
+
+                        await _emailSender.SendEmailAsync(user.Email, "Prescription Request", 
+                            $"Dear <b> {user.FirstName} {user.LastName} </b> <br> Thank you for uploading your prescription. <br>We succesfully receieved your prescription at {prescription.CreationTime.ToString("HH:mm")} on {DateTime.Today.ToString("dd-MM-yyyy")} a one of our team member will contact you within the next 24 hours with more details. <br><br>Thank you,<br> Westdale Pharmacy Team");
+                        return "Thank you! Your prescription has been successfully submitted!";
+
                     }
                 }
             }
@@ -303,7 +318,7 @@ namespace WestdalePharmacyApp.Controllers
             requestedPrescription.Status = "Refill Requested";
             requestedPrescription.UpdatedTime = null;
             requestedPrescription.SpecialInstruction = prescription.SpecialInstruction;
-            requestedPrescription.RefillAvailable = tempPrescription.RefillAvailable - 1;
+            //requestedPrescription.RefillAvailable = tempPrescription.RefillAvailable - 1;
             //requestedPrescription.TimesRefill = 
             requestedPrescription.PrescriptionId = new Guid();
             if (ModelState.IsValid)
@@ -399,7 +414,17 @@ namespace WestdalePharmacyApp.Controllers
             prescription.UpdatedTime = DateTimeOffset.Now;
             prescription.ImageFile = tempPrescription.ImageFile;
             prescription.CreationTime = tempPrescription.CreationTime;
+            prescription.TimesRefill = tempPrescription.TimesRefill;
             
+            if (prescription.Status.Equals("Completed"))
+            {
+                prescription.TimesRefill += 1;
+                if (prescription.RefillAvailable > 0)
+                {
+                    prescription.RefillAvailable -= 1;
+                }
+                   
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -430,6 +455,141 @@ namespace WestdalePharmacyApp.Controllers
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", prescription.UserId);
             return View(prescription);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DetailsA(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //var prescription = await _context.Prescriptions.FindAsync(id);
+            var prescription =
+                    from u in _context.Users
+                    join p in _context.Prescriptions on u.Id equals p.UserId
+                    where p.PrescriptionId == id
+                    select new PrescriptionViewModel { ApplicationUser = u, Prescription = p };
+            if (prescription == null)
+            {
+                return NotFound();
+            }
+            //ViewData["UserId"] = new SelectList(prescription, "Id", "Id", prescription);
+            return View(await prescription.FirstOrDefaultAsync());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        // GET: Prescriptions/Delete/5
+        public async Task<IActionResult> DeleteA(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var prescription = await _context.Prescriptions
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.PrescriptionId == id);
+            if (prescription == null)
+            {
+                return NotFound();
+            }
+
+            return View(prescription);
+        }
+
+        [Authorize(Roles = "Admin")]
+        // POST: Prescriptions/Delete/5
+        [HttpPost, ActionName("DeleteA")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmedA(Guid id)
+        {
+            var prescription = await _context.Prescriptions.FindAsync(id);
+            _context.Prescriptions.Remove(prescription);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexA));
+        }
+
+        [Authorize(Roles = "Admin")]
+        // GET: Prescriptions for admin
+        public async Task<IActionResult> IndexAR(string value)
+        {
+            var applicationDbContext = _context.Prescriptions.Include(p => p.User);
+            var prescriptionViewModel =
+                    from u in _context.Users
+                    join p in _context.Prescriptions on u.Id equals p.UserId
+                    where (p.Status.Equals("Completed"))
+                    select new PrescriptionViewModel { ApplicationUser = u, Prescription = p };
+            if (!string.IsNullOrEmpty(value))
+            {
+                prescriptionViewModel =
+                    from u in _context.Users
+                    join p in _context.Prescriptions on u.Id equals p.UserId
+                    where (p.Status.Equals("Completed") && (u.LastName.Contains(value) || u.FirstName.Contains(value)))
+                    select new PrescriptionViewModel { ApplicationUser = u, Prescription = p };
+            }
+                
+
+            return View(await prescriptionViewModel.ToListAsync());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DetailsAR(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //var prescription = await _context.Prescriptions.FindAsync(id);
+            var prescription =
+                    from u in _context.Users
+                    join p in _context.Prescriptions on u.Id equals p.UserId
+                    where p.PrescriptionId == id
+                    select new PrescriptionViewModel { ApplicationUser = u, Prescription = p };
+            if (prescription == null)
+            {
+                return NotFound();
+            }
+            //ViewData["UserId"] = new SelectList(prescription, "Id", "Id", prescription);
+            return View(await prescription.FirstOrDefaultAsync());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        // GET: Prescriptions/Delete/5
+        public async Task<IActionResult> DeleteAR(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var prescription = await _context.Prescriptions
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.PrescriptionId == id);
+            if (prescription == null)
+            {
+                return NotFound();
+            }
+
+            return View(prescription);
+        }
+
+        [Authorize(Roles = "Admin")]
+        // POST: Prescriptions/Delete/5
+        [HttpPost, ActionName("DeleteAR")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmedAR(Guid id)
+        {
+            var prescription = await _context.Prescriptions.FindAsync(id);
+            _context.Prescriptions.Remove(prescription);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexAR));
         }
 
     }

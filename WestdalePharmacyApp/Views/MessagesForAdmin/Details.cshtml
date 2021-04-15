@@ -17,10 +17,10 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.body)
+            @Html.DisplayNameFor(model => model.Body)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.body)
+            @Html.DisplayFor(model => model.Body)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Timestamp)
@@ -35,14 +35,15 @@
             @Html.DisplayFor(model => model.From_UserEmail)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.To_UserId)
+            To.
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.To_UserId)
+            @ViewBag.ToUser
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.MessageId">Edit</a> |
+    |
+    <a asp-action="Reply" asp-route-id="@Model.MessageId">Reply</a>|
     <a asp-action="Index">Back to List</a>
 </div>
