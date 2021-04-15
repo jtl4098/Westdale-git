@@ -237,6 +237,7 @@ namespace WestdalePharmacyApp.Controllers
                 {
                     message.To_UserId = toUser.Id;
                     message.To_User = toUser;
+                   
                 }
                 var roleUser = (from role in _context.UserRoles
                                 join u in _context.Users on role.UserId equals u.Id
@@ -251,10 +252,12 @@ namespace WestdalePharmacyApp.Controllers
                 var adminUser = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(roleUser.UserId));
                 message.From_UserEmail = adminUser.Email;
 
+                await _emailSender.SendEmailAsync(TempData["MsgEmail"].ToString(), "Westdale Pharmacy - Email Request", $"<h1>--New Message--</h1> <br> From.<b>{adminUser.Email}</b> <br> Title : {message.Title} <br> <p>{message.Body}</p>");
 
-                //Send Notification via Email to admin and user
-                //await _emailSender.SendEmailAsync(message.From_UserEmail, "Email Request", "Successfully get it");
-                //await _emailSender.SendEmailAsync(message.To_User.Email, "Email Request", "Successfully get it");
+               
+
+
+
                 message.IsRegistered = true;
                 message.Timestamp = DateTimeOffset.Now;
                 message.MessageId = Guid.NewGuid();
